@@ -12,13 +12,7 @@ public class CommandApplication extends Command {
     public CommandApplication() {
 	keywords = new KeywordApplication();
 	
-    }
-
-    public boolean checkKeyword(String command, String keywords){	
-	if (keywords.contains(command))
-	    return true;
-	return false;
-    }
+    }    
     
     @Override
     public boolean execute(String command) {	

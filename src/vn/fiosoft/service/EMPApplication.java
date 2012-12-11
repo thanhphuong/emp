@@ -2,6 +2,7 @@ package vn.fiosoft.service;
 
 import java.util.ArrayList;
 
+import vn.fiosoft.ai.Command;
 import vn.fiosoft.ai.CommandApplication;
 import vn.fiosoft.log.Log4J;
 import vn.fiosoft.settings.Settings;
@@ -12,7 +13,7 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 
-public class EMPApplication extends Application{
+public class EMPApplication extends Application {
 
     private static int mMaxResults = 3;
 
@@ -22,7 +23,7 @@ public class EMPApplication extends Application{
 
     private SpeechRecognizer mSpeechRecognizer;
     private Intent mIntentSpeechReconizer;
-    
+    private Command command;
 
     @Override
     public void onCreate() {
@@ -33,8 +34,8 @@ public class EMPApplication extends Application{
 	// create SpeechRecognizer object
 	mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
 	mSpeechRecognizer.setRecognitionListener(new EMPRecognitionListener());
-	
 
+	command = new CommandApplication();
 
     }
 
@@ -48,7 +49,7 @@ public class EMPApplication extends Application{
      * @param maxResult
      */
     public void startSpeechRecognizer(int maxResult) {
-	mMaxResults = maxResult;	
+	mMaxResults = maxResult;
 	if (mIntentSpeechReconizer == null) {
 	    mIntentSpeechReconizer = new Intent(
 		    RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -99,6 +100,14 @@ public class EMPApplication extends Application{
 	this.isListening = isListening;
     }
 
+    public Command getCommand() {
+	return command;
+    }
+
+    public void setCommand(Command command) {
+	this.command = command;
+    }
+
     /**
      * This class Used for receiving notifications from the SpeechRecognizer
      * when the recognition related events occur. All the callback are executed
@@ -138,12 +147,12 @@ public class EMPApplication extends Application{
 	public void onResults(Bundle results) {
 	    ArrayList<String> data = results
 		    .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-	    
-	    for (String command : data){
-		if (commandApplication.execute(command))
+
+	    for (String s : data) {
+		if (getCommand().execute(s))
 		    break;
 	    }
-	    
+
 	    startSpeechRecognizer(mMaxResults);
 	}
 
@@ -152,5 +161,5 @@ public class EMPApplication extends Application{
 	}
 
     }
-    private CommandApplication commandApplication = new CommandApplication();
+
 }
