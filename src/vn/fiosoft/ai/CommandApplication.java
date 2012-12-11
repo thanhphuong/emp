@@ -1,6 +1,8 @@
 package vn.fiosoft.ai;
 
 import android.content.Intent;
+import android.widget.Toast;
+import vn.fiosoft.ai.keyword.KeywordApplication;
 import vn.fiosoft.service.EMPApplication;
 import vn.fiosoft.service.EMPService;
 import vn.fiosoft.service.EMPTextToSpeech;
@@ -39,7 +41,6 @@ public class CommandApplication extends Command {
     }
     
     public void hello(){
-	EMPTextToSpeech textToSpeech = new EMPTextToSpeech(EMPApplication.mInstance);
-	textToSpeech.say("Hi");
+    	Toast.makeText(EMPApplication.mInstance, "Hi Sir !!!", Toast.LENGTH_SHORT).show();
     }
 }

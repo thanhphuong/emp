@@ -1,6 +1,6 @@
-package vn.fiosoft.ai;
+package vn.fiosoft.ai.keyword;
 
-public class KeywordApplication {
+public class KeywordMain{
     public static final int HELLO = 0;
     public static final int EXIT = 1;
 
@@ -9,9 +9,9 @@ public class KeywordApplication {
 	case HELLO:
 	    return "hi|hello";
 	case EXIT:
-	    return "exit";
+	    return "exit|close";
 	default:
 	    return "";
 	}
-    }
+    }  
 }
